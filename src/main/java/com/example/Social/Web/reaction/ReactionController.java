@@ -1,6 +1,6 @@
 package com.example.Social.Web.reaction;
 
-import com.example.Social.Web.user.User;
+import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,15 +10,25 @@ import java.util.List;
 @RequestMapping("Reaction")
 public class ReactionController {
     @Autowired
-    private ReactionRepository reactionRepository;
+    private ReactionService reactionService;
 
-    @GetMapping("allReactions")
-    public List<Reaction> getUsers(){
-        return reactionRepository.findAll();
+    @GetMapping("allReaction")
+    public List<Reaction> getReactions(){
+        return reactionService.getAllReactions();
+    }
+
+    @GetMapping("getReaction/{ReactionID}")
+    public Reaction getReaction(@PathParam("ReactionID") ReactionID reaction_id){
+        return reactionService.getSomeReaction(reaction_id);
     }
 
     @PostMapping("addReaction")
     public Reaction addReaction(@RequestBody Reaction reaction){
-        return reactionRepository.save(reaction);
+        return reactionService.addReaction(reaction);
+    }
+
+    @DeleteMapping("Delete/{ReactionID}")
+    public String deleteReaction(@PathVariable("ReactionID") ReactionID id){
+        return reactionService.deleteReaction(id);
     }
 }

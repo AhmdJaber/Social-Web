@@ -1,7 +1,5 @@
 package com.example.Social.Web.reply;
 
-import com.example.Social.Web.comment.Comment;
-import com.example.Social.Web.comment.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

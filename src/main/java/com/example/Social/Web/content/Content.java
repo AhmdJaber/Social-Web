@@ -2,7 +2,6 @@ package com.example.Social.Web.content;
 
 import com.example.Social.Web.comment.Comment;
 import com.example.Social.Web.post.Post;
-import com.example.Social.Web.reaction.Reaction;
 import com.example.Social.Web.reply.Reply;
 import com.example.Social.Web.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;

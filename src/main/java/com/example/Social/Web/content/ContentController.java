@@ -1,7 +1,5 @@
 package com.example.Social.Web.content;
 
-import com.example.Social.Web.user.User;
-import jakarta.persistence.Entity;
 import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

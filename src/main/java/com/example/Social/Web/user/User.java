@@ -4,9 +4,6 @@ import com.example.Social.Web.content.Content;
 import com.example.Social.Web.relationship.Relationship;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.List;

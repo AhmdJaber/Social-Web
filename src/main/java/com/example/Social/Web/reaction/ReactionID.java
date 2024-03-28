@@ -3,7 +3,6 @@ package com.example.Social.Web.reaction;
 import com.example.Social.Web.content.Content;
 import com.example.Social.Web.user.User;
 import jakarta.persistence.Embeddable;
-import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 

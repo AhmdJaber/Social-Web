@@ -1,9 +1,7 @@
 package com.example.Social.Web.comment;
 
 import com.example.Social.Web.content.Content;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import org.hibernate.annotations.Cascade;
 
 import java.time.LocalDate;
 

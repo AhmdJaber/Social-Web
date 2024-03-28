@@ -1,7 +1,5 @@
 package com.example.Social.Web.relationship;
 
-import com.example.Social.Web.content.Content;
-import com.example.Social.Web.content.ContentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

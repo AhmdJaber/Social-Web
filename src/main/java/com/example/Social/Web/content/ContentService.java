@@ -1,6 +1,5 @@
 package com.example.Social.Web.content;
 
-import com.example.Social.Web.comment.Comment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

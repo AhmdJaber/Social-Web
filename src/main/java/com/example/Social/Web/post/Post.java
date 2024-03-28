@@ -1,7 +1,6 @@
 package com.example.Social.Web.post;
 
 import com.example.Social.Web.content.Content;
-import com.sun.tools.attach.AgentInitializationException;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
