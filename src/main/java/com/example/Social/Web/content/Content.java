@@ -22,38 +22,41 @@ public class Content {
     private User user;
 
     @JsonIgnore
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "content")
+    @OneToOne(mappedBy = "content")
     private Comment comment;
 
     @JsonIgnore
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "content")
+    @OneToOne(mappedBy = "content")
     private Post post;
 
     @JsonIgnore
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "content")
+    @OneToOne(mappedBy = "content")
     private Reply reply;
 
     @OneToMany(mappedBy = "content")
     private List<Reply> replies;
 
+    private String type = null;
     public Content() {
     }
 
-    public Content(Long content_id, User user, Comment comment, Post post, Reply reply, List<Reply> replies) {
+    public Content(Long content_id, User user, Comment comment, Post post, Reply reply, List<Reply> replies, String type) {
         this.content_id = content_id;
         this.user = user;
         this.comment = comment;
         this.post = post;
         this.reply = reply;
         this.replies = replies;
+        this.type = type;
     }
 
-    public Content(User user, Comment comment, Post post, Reply reply, List<Reply> replies) {
+    public Content(User user, Comment comment, Post post, Reply reply, List<Reply> replies, String type) {
         this.user = user;
         this.comment = comment;
         this.post = post;
         this.reply = reply;
         this.replies = replies;
+        this.type = type;
     }
 
     public Long getContent_id() {
@@ -104,6 +107,14 @@ public class Content {
         this.replies = replies;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     @Override
     public String toString() {
         return "Content{" +
@@ -113,6 +124,7 @@ public class Content {
                 ", post=" + post +
                 ", reply=" + reply +
                 ", replies=" + replies +
+                ", type='" + type + '\'' +
                 '}';
     }
 }

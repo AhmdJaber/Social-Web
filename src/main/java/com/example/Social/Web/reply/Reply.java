@@ -18,18 +18,22 @@ public class Reply {
     @JoinColumn(name = "reply_parent_id")
     private Content reply_parent;
 
+    private String reply_content;
+
     public Reply() {
     }
 
-    public Reply(Long reply_id, Content content, Content reply_parent) {
+    public Reply(Long reply_id, Content content, Content reply_parent, String reply_content) {
         this.reply_id = reply_id;
         this.content = content;
         this.reply_parent = reply_parent;
+        this.reply_content = reply_content;
     }
 
-    public Reply(Content content, Content reply_parent) {
+    public Reply(Content content, Content reply_parent, String reply_content) {
         this.content = content;
         this.reply_parent = reply_parent;
+        this.reply_content = reply_content;
     }
 
     public Long getReply_id() {
@@ -52,6 +56,14 @@ public class Reply {
         return reply_parent;
     }
 
+    public String getReply_content() {
+        return reply_content;
+    }
+
+    public void setReply_content(String reply_content) {
+        this.reply_content = reply_content;
+    }
+
     public void setReply_parent(Content reply_parent) {
         this.reply_parent = reply_parent;
     }
@@ -62,6 +74,7 @@ public class Reply {
                 "reply_id=" + reply_id +
                 ", content=" + content +
                 ", reply_parent=" + reply_parent +
+                ", reply_content='" + reply_content + '\'' +
                 '}';
     }
 }

@@ -1,5 +1,7 @@
 package com.example.Social.Web.reply;
 
+import com.example.Social.Web.comment.Comment;
+import com.example.Social.Web.comment.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,15 +11,33 @@ import java.util.List;
 @RequestMapping
 public class ReplyController {
     @Autowired
-    private ReplyRepository replyRepository;
+    private ReplyService replyService;
 
-    @GetMapping("allReplies")
+    @GetMapping("/allReply")
     public List<Reply> getReplies(){
-        return replyRepository.findAll();
+        return replyService.getAllReplies();
     }
 
-    @PostMapping("addReply")
+    @GetMapping("getReply/{ReplyID}")
+    public Reply getReply(@PathVariable("ReplyID") Long id){
+        return replyService.getSomeReply(id);
+    }
+
+    @PostMapping("/addReply")
     public Reply addReply(@RequestBody Reply reply){
-        return replyRepository.save(reply);
+        replyService.AddReply(reply);
+        return reply;
+    }
+
+    @DeleteMapping("Delete/{ReplyID}")
+    public String deleteReply(@PathVariable("ReplyID") Long id){
+        return replyService.deleteReply(id);
+    }
+
+    @PutMapping("Update/{ReplyID}")
+    public String updateReply(
+            @PathVariable("ReplyID") Long reply_id,
+            @RequestParam(required = false) String reply_content){
+        return replyService.updateReply(reply_id, reply_content);
     }
 }

@@ -1,6 +1,5 @@
 package com.example.Social.Web.comment;
 
-import org.hibernate.annotations.Comments;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,15 +9,33 @@ import java.util.List;
 @RequestMapping("Comment")
 public class CommentController {
     @Autowired
-    private CommentRepository commentRepository;
+    private CommentService commentService;
 
     @GetMapping("/allComments")
     public List<Comment> getComments(){
-        return commentRepository.findAll();
+        return commentService.getAllComments();
+    }
+
+    @GetMapping("getComment/{CommentID}")
+    public Comment getComment(@PathVariable("CommentID") Long id){
+        return commentService.getSomeComment(id);
     }
 
     @PostMapping("/addComment")
     public Comment addComment(@RequestBody Comment comment){
-        return commentRepository.save(comment);
+        commentService.AddComment(comment);
+        return comment;
+    }
+
+    @DeleteMapping("Delete/{CommentID}")
+    public String deleteComment(@PathVariable("CommentID") Long id){
+        return commentService.deleteComment(id);
+    }
+
+    @PutMapping("Update/{CommentID}")
+    public String updateComment(
+            @PathVariable("CommentID") Long comment_id,
+            @RequestParam(required = true) String comment_content){
+        return commentService.updateComment(comment_id, comment_content);
     }
 }

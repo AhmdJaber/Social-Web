@@ -20,7 +20,8 @@ public class User {
     private String username;
     private String password;
     private LocalDate dob;
-    private Long phone;
+    private String phone;
+    private String email;
 
     @JsonIgnore
     @OneToMany(mappedBy = "user")
@@ -31,19 +32,36 @@ public class User {
 
     public User() {
     }
-    public User(Long user_id){
 
+    public User(Long user_id,
+                String username,
+                String password,
+                LocalDate dob,
+                String phone,
+                String email,
+                List<Content> contents,
+                List<Relationship> relationships) {
+        this.user_id = user_id;
+        this.username = username;
+        this.password = password;
+        this.dob = dob;
+        this.phone = phone;
+        this.email = email;
+        this.contents = contents;
+        this.relationships = relationships;
     }
 
     public User(String username,
                 String password,
                 LocalDate dob,
-                Long phone, List<Content> contents,
+                String phone, String email,
+                List<Content> contents,
                 List<Relationship> relationships) {
         this.username = username;
         this.password = password;
         this.dob = dob;
         this.phone = phone;
+        this.email = email;
         this.contents = contents;
         this.relationships = relationships;
     }
@@ -80,12 +98,20 @@ public class User {
         this.dob = dob;
     }
 
-    public Long getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(Long phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public List<Content> getContents() {
@@ -111,7 +137,8 @@ public class User {
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", dob=" + dob +
-                ", phone=" + phone +
+                ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
                 ", contents=" + contents +
                 ", relationships=" + relationships +
                 '}';
