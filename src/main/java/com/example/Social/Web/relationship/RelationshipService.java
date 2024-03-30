@@ -1,5 +1,8 @@
 package com.example.Social.Web.relationship;
 
+import com.example.Social.Web.reaction.Reaction;
+import com.example.Social.Web.reaction.ReactionID;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,5 +38,15 @@ public class RelationshipService {
         }
 
         return "Action is Done";
+    }
+
+    @Transactional
+    public String updateRelation(Long relation_id, String relation_type){
+        Relationship relationship = relationshipRepository.findById(relation_id).orElseThrow(
+                () -> new IllegalStateException("There is no Relationship with ID = " + relation_id)
+        );
+
+        relationship.setRelation_type(relation_type);
+        return "Action is done";
     }
 }

@@ -13,22 +13,22 @@ public class UserController {
     @Autowired
     public UserService userService;
 
-    @GetMapping("all users")
+    @GetMapping("/all users")
     public List<User> getUsers(){
         return userService.getAllUsers();
     }
 
-    @GetMapping("getUser/{UserID}")
-    public User getUser(@PathParam("UserID") Long user_id){
+    @GetMapping("/getUser/{UserID}")
+    public User getUser(@PathVariable("UserID") Long user_id){
         return userService.getUser(user_id);
     }
 
-    @PostMapping("addUser")
+    @PostMapping("/addUser")
     public User addUser(@RequestBody User user){
         return userService.addUser(user);
     }
 
-    @PutMapping("UpdateUsername/{UserID}")
+    @PutMapping("/UpdateUsername/{UserID}")
     public String updateUsername(
             @PathVariable("UserID") Long user_id,
             @RequestParam(required = true) String username){
@@ -60,7 +60,7 @@ public class UserController {
     public String UpdatePhone(
             @PathVariable("UserID") Long user_id,
             @RequestParam(required = true) String phone){
-        return userService.updateName(user_id, phone);
+        return userService.updatePhone(user_id, phone);
     }
 
     @DeleteMapping("DeleteUser/{UserID}")

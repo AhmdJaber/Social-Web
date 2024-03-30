@@ -1,6 +1,7 @@
 package com.example.Social.Web.post;
 
 import com.example.Social.Web.content.ContentRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -52,6 +53,7 @@ public class PostService {
         return "There is not post with id = " + post_id;
     }
 
+    @Transactional
     public String updatePost(Long post_id, String post_content){
         Post post = postRepository.findById(post_id).orElseThrow(
                 () -> new IllegalStateException("There is no Post with ID = " + post_id)

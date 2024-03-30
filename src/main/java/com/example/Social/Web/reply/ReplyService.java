@@ -1,6 +1,7 @@
 package com.example.Social.Web.reply;
 
 import com.example.Social.Web.content.ContentRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -52,6 +53,7 @@ public class ReplyService {
         return "There is not reply with id = " + reply_id;
     }
 
+    @Transactional
     public String updateReply(Long reply_id, String reply_content){
         Reply reply = replyRepository.findById(reply_id).orElseThrow(
                 () -> new IllegalStateException("There is no Reply with ID = " + reply_id)

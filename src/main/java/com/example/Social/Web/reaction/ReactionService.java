@@ -1,5 +1,7 @@
 package com.example.Social.Web.reaction;
 
+import com.example.Social.Web.reply.Reply;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,5 +37,15 @@ public class ReactionService {
         }
 
         return "Action is Done";
+    }
+
+    @Transactional
+    public String updateReaction(ReactionID reactionID, String reaction_type){
+        Reaction reaction = reactionRepository.findById(reactionID).orElseThrow(
+                () -> new IllegalStateException("There is no Reaction with ID = " + reactionID)
+        );
+
+        reaction.setReaction_type(reaction_type);
+        return "Action is done";
     }
 }

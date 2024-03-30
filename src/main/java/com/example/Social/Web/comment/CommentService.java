@@ -1,6 +1,7 @@
 package com.example.Social.Web.comment;
 
 import com.example.Social.Web.content.ContentRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -52,6 +53,7 @@ public class CommentService {
         return "There is not comment with id = " + comment_id;
     }
 
+    @Transactional
     public String updateComment(Long comment_id, String comment_content){
         Comment comment = commentRepository.findById(comment_id).orElseThrow(
                 () -> new IllegalStateException("There is no Comment with ID = " + comment_id)

@@ -1,5 +1,6 @@
 package com.example.Social.Web.user;
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,6 +47,7 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    @Transactional
     public String updateName(Long user_id, String username){
         User user = userRepository.findById(user_id).orElseThrow(
                 () -> new IllegalStateException("There is no User with ID = " + user_id)
@@ -55,6 +57,7 @@ public class UserService {
         return "Action is done";
     }
 
+    @Transactional
     public String updatePassword(Long user_id, String password){
         User user = userRepository.findById(user_id).orElseThrow(
                 () -> new IllegalStateException("There is no User with ID = " + user_id)
@@ -64,6 +67,7 @@ public class UserService {
         return "Action is done";
     }
 
+    @Transactional
     public String updateDate(Long user_id, LocalDate dob){
         User user = userRepository.findById(user_id).orElseThrow(
                 () -> new IllegalStateException("There is no User with ID = " + user_id)
@@ -73,6 +77,7 @@ public class UserService {
         return "Action is done";
     }
 
+    @Transactional
     public String updatePhone(Long user_id, String phone){
         User user = userRepository.findById(user_id).orElseThrow(
                 () -> new IllegalStateException("There is no User with ID = " + user_id)
@@ -82,6 +87,7 @@ public class UserService {
         return "Action is done";
     }
 
+    @Transactional
     public String updateEmail(Long user_id, String email){
         User user = userRepository.findById(user_id).orElseThrow(
                 () -> new IllegalStateException("There is no User with ID = " + user_id)
