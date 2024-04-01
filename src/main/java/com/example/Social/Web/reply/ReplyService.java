@@ -1,8 +1,10 @@
 package com.example.Social.Web.reply;
 
+import com.example.Social.Web.comment.Comment;
+import com.example.Social.Web.comment.CommentRepository;
+import com.example.Social.Web.comment.CommentService;
 import com.example.Social.Web.content.Content;
 import com.example.Social.Web.content.ContentRepository;
-import com.example.Social.Web.post.PostID;
 import com.example.Social.Web.user.User;
 import com.example.Social.Web.user.UserRepository;
 import jakarta.transaction.Transactional;
@@ -13,6 +15,10 @@ import java.util.List;
 
 @Service
 public class ReplyService {
+    @Autowired
+    private CommentService commentService;
+    @Autowired
+    private CommentRepository commentRepository;
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -38,11 +44,18 @@ public class ReplyService {
                 () -> new IllegalStateException("There is no User with ID = " + userID)
         );
 
-        Content newContent= new Content(user, "post");
+        Content newContent= new Content(user, "reply");
         contentRepository.save(newContent);
         ReplyID replyID = new ReplyID(newContent);
         reply.setReplyID(replyID);
+        Comment comment = commentRepository.findByCommentID_content(reply.getReplyParent()).orElseThrow(
+                () -> new IllegalStateException("There is no content with this ID!")
+        );
 
+        List<Reply> replies = comment.getReplies();
+        replies.add(reply);
+        comment.setReplies(replies);
+//        commentRepository.save(comment);
         return replyRepository.save(reply);
     }
 

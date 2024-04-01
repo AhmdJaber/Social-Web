@@ -1,6 +1,5 @@
 package com.example.Social.Web.reply;
 
-import com.example.Social.Web.comment.CommentID;
 import com.example.Social.Web.content.Content;
 import jakarta.persistence.*;
 
@@ -13,7 +12,7 @@ public class Reply {
 
     @ManyToOne
     @JoinColumn(name = "reply_parent_id")
-    private Content reply_parent;
+    private Content replyParent;
 
     private String reply_content;
 
@@ -22,12 +21,12 @@ public class Reply {
 
     public Reply(ReplyID replyID, Content reply_parent, String reply_content) {
         this.replyID = replyID;
-        this.reply_parent = reply_parent;
+        this.replyParent = reply_parent;
         this.reply_content = reply_content;
     }
 
     public Reply(Content reply_parent, String reply_content) {
-        this.reply_parent = reply_parent;
+        this.replyParent = reply_parent;
         this.reply_content = reply_content;
     }
 
@@ -39,12 +38,12 @@ public class Reply {
         this.replyID = replyID;
     }
 
-    public Content getReply_parent() {
-        return reply_parent;
+    public Content getReplyParent() {
+        return replyParent;
     }
 
-    public void setReply_parent(Content reply_parent) {
-        this.reply_parent = reply_parent;
+    public void setReplyParent(Content replyParent) {
+        this.replyParent = replyParent;
     }
 
     public String getReply_content() {
@@ -59,7 +58,7 @@ public class Reply {
     public String toString() {
         return "Reply{" +
                 "replyID=" + replyID +
-                ", reply_parent=" + reply_parent +
+                ", reply_parent=" + replyParent +
                 ", reply_content='" + reply_content + '\'' +
                 '}';
     }

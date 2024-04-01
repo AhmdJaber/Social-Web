@@ -1,5 +1,6 @@
 package com.example.Social.Web.comment;
 
+import com.example.Social.Web.content.Content;
 import com.example.Social.Web.post.Post;
 import com.example.Social.Web.reply.Reply;
 import com.example.Social.Web.reply.ReplyService;
@@ -26,6 +27,10 @@ public class Comment {
     @JoinColumn(name = "post_id")
     private Post post;
 
+    @OneToMany
+    @JoinColumn(name = "content_id")
+    private List<Reply> replies;
+
     public Comment() {
     }
 
@@ -34,12 +39,14 @@ public class Comment {
         this.commentContent = commentContent;
         this.date = date;
         this.post = post;
+        this.replies = replies;
     }
 
     public Comment(String commentContent, LocalDate date, Post post, List<Reply> replies) {
         this.commentContent = commentContent;
         this.date = date;
         this.post = post;
+        this.replies = replies;
     }
 
     public CommentID getCommentID() {
@@ -74,6 +81,14 @@ public class Comment {
         this.post = post;
     }
 
+    public List<Reply> getReplies() {
+        return replies;
+    }
+
+    public void setReplies(List<Reply> replies) {
+        this.replies = replies;
+    }
+
     @Override
     public String toString() {
         return "Comment{" +
@@ -81,6 +96,7 @@ public class Comment {
                 ", commentContent='" + commentContent + '\'' +
                 ", date=" + date +
                 ", post=" + post +
+                ", replies=" + replies +
                 '}';
     }
 }

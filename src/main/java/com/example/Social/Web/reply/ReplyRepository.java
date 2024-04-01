@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface ReplyRepository extends JpaRepository<Reply, ReplyID> {
     boolean existsByReplyID_Content(Content content);
+    List<Reply> findByReplyParent(Content reply_parent);
 }
