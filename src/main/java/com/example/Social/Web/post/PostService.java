@@ -2,6 +2,8 @@ package com.example.Social.Web.post;
 
 import com.example.Social.Web.content.Content;
 import com.example.Social.Web.content.ContentRepository;
+import com.example.Social.Web.user.User;
+import com.example.Social.Web.user.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +12,9 @@ import java.util.List;
 
 @Service
 public class PostService {
+    @Autowired
+    private UserRepository userRepository;
+
     @Autowired
     private ContentRepository contentRepository;
     private final PostRepository postRepository;
@@ -24,24 +29,21 @@ public class PostService {
 
     public Post getSomePost(PostID post_id){
         return postRepository.findById(post_id).orElseThrow(
-                () -> new IllegalStateException("There is no Student with ID = " + post_id)
+                () -> new IllegalStateException("There is no Post with ID = " + post_id)
         );
     }
 
-    public void AddPost(Post post){
-        if (postRepository.existsByPostID_Content(post.getPostID().getContent())){
-            throw new IllegalStateException("This content id: " +
-                    post.getPostID().getContent().getContent_id()
-                    + " is already used for another content");
-        }
+    public Post AddPost(Post post, Long userId){
+        User user = userRepository.findById(userId).orElseThrow(
+                () -> new IllegalStateException("There is no User with ID = " + userId)
+        );
 
-        postRepository.save(post);
+        Content newContent= new Content(user, "post");
+        contentRepository.save(newContent);
+        PostID postID = new PostID(newContent);
+        post.setPostID(postID);
 
-        Content content = contentRepository.findById(post.getPostID().getContent().getContent_id())
-                .orElseThrow(() -> new IllegalStateException("Content is not found"));
-
-        content.setType("post");
-        contentRepository.save(content);
+        return postRepository.save(post);
     }
 
     public String deletePost(PostID post_id){

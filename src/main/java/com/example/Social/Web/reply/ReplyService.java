@@ -2,6 +2,9 @@ package com.example.Social.Web.reply;
 
 import com.example.Social.Web.content.Content;
 import com.example.Social.Web.content.ContentRepository;
+import com.example.Social.Web.post.PostID;
+import com.example.Social.Web.user.User;
+import com.example.Social.Web.user.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +13,8 @@ import java.util.List;
 
 @Service
 public class ReplyService {
+    @Autowired
+    private UserRepository userRepository;
     @Autowired
     private ContentRepository contentRepository;
     private final ReplyRepository replyRepository;
@@ -28,20 +33,17 @@ public class ReplyService {
         );
     }
 
-    public void AddReply(Reply reply){
-        if (replyRepository.existsByReplyID_Content(reply.getReplyID().getContent())){
-            throw new IllegalStateException("This content id: " +
-                    reply.getReplyID().getContent().getContent_id()
-                    + " is already used for another content");
-        }
+    public Reply AddReply(Reply reply, Long userID){
+        User user = userRepository.findById(userID).orElseThrow(
+                () -> new IllegalStateException("There is no User with ID = " + userID)
+        );
 
-        replyRepository.save(reply);
+        Content newContent= new Content(user, "post");
+        contentRepository.save(newContent);
+        ReplyID replyID = new ReplyID(newContent);
+        reply.setReplyID(replyID);
 
-        Content content = contentRepository.findById(reply.getReplyID().getContent().getContent_id())
-                .orElseThrow(() -> new IllegalStateException("Content not found"));
-
-        content.setType("reply");
-        contentRepository.save(content);
+        return replyRepository.save(reply);
     }
 
     public String deleteReply(ReplyID reply_id){

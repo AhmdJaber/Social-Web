@@ -2,7 +2,10 @@ package com.example.Social.Web.comment;
 
 import com.example.Social.Web.content.Content;
 import com.example.Social.Web.content.ContentRepository;
+import com.example.Social.Web.post.PostID;
 import com.example.Social.Web.reply.ReplyRepository;
+import com.example.Social.Web.user.User;
+import com.example.Social.Web.user.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +14,8 @@ import java.util.List;
 
 @Service
 public class CommentService {
+    @Autowired
+    private UserRepository userRepository;
     @Autowired
     private ContentRepository contentRepository;
     private final CommentRepository commentRepository;
@@ -29,20 +34,17 @@ public class CommentService {
         );
     }
 
-    public void AddComment(Comment comment){
-        if (commentRepository.existsByCommentID_Content(comment.getCommentID().getContent())){
-            throw new IllegalStateException("This content id: " +
-                    comment.getCommentID().getContent().getContent_id()
-                    + " is already used for another content");
-        }
+    public Comment AddComment(Comment comment, Long userID){
+        User user = userRepository.findById(userID).orElseThrow(
+                () -> new IllegalStateException("There is no User with ID = " + userID)
+        );
 
-        commentRepository.save(comment);
+        Content newContent= new Content(user, "comment");
+        contentRepository.save(newContent);
+        CommentID commentID= new CommentID(newContent);
+        comment.setCommentID(commentID);
 
-        Content content = contentRepository.findById(comment.getCommentID().getContent().getContent_id())
-                .orElseThrow(() -> new IllegalStateException("Content not found"));
-
-        content.setType("comment");
-        contentRepository.save(content);
+        return commentRepository.save(comment);
     }
 
     public String deleteComment(CommentID commentId){

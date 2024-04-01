@@ -1,7 +1,5 @@
 package com.example.Social.Web.content;
 
-import com.example.Social.Web.comment.Comment;
-import com.example.Social.Web.post.Post;
 import com.example.Social.Web.reply.Reply;
 import com.example.Social.Web.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -39,6 +37,11 @@ public class Content {
     public Content(User user, List<Reply> replies, String type) {
         this.user = user;
         this.replies = replies;
+        this.type = type;
+    }
+
+    public Content(User user, String type){
+        this.user = user;
         this.type = type;
     }
 

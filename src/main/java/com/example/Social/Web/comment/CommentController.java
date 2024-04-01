@@ -22,10 +22,10 @@ public class CommentController {
         return commentService.getSomeComment(id);
     }
 
-    @PostMapping("/addComment")
-    public Comment addComment(@RequestBody Comment comment){
-        commentService.AddComment(comment);
-        return comment;
+    @PostMapping("/addComment/{UserID}")
+    public Comment addComment(@PathVariable("UserID") Long userID,
+            @RequestBody Comment comment){
+        return commentService.AddComment(comment, userID);
     }
 
     @DeleteMapping("Delete/{CommentID}")

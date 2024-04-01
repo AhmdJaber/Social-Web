@@ -21,10 +21,10 @@ public class PostController {
         return postService.getSomePost(id);
     }
 
-    @PostMapping("/addPost")
-    public Post addPost(@RequestBody Post post){
-        postService.AddPost(post);
-        return post;
+    @PostMapping("/addPost/{UserID}")
+    public Post addPost(@PathVariable("UserID") Long userID,
+            @RequestBody Post post){
+        return postService.AddPost(post, userID);
     }
 
     @DeleteMapping("Delete/{PostID}")

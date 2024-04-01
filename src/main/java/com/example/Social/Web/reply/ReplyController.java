@@ -21,10 +21,10 @@ public class ReplyController {
         return replyService.getSomeReply(id);
     }
 
-    @PostMapping("/addReply")
-    public Reply addReply(@RequestBody Reply reply){
-        replyService.AddReply(reply);
-        return reply;
+    @PostMapping("/addReply/{UserID}")
+    public Reply addReply(@PathVariable("UserID") Long userID,
+                          @RequestBody Reply reply){
+        return replyService.AddReply(reply, userID);
     }
 
     @DeleteMapping("Delete/{ReplyID}")
