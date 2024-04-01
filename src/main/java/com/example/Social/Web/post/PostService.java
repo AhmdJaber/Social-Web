@@ -1,5 +1,6 @@
 package com.example.Social.Web.post;
 
+import com.example.Social.Web.content.Content;
 import com.example.Social.Web.content.ContentRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,29 +22,29 @@ public class PostService {
         return postRepository.findAll();
     }
 
-    public Post getSomePost(Long post_id){
+    public Post getSomePost(PostID post_id){
         return postRepository.findById(post_id).orElseThrow(
                 () -> new IllegalStateException("There is no Student with ID = " + post_id)
         );
     }
 
     public void AddPost(Post post){
-        if (post.getContent().getType() != null){
-            throw new IllegalStateException("This post id: " +
-                    post.getContent().getContent_id()
+        if (postRepository.existsByPostID_Content(post.getPostID().getContent())){
+            throw new IllegalStateException("This content id: " +
+                    post.getPostID().getContent().getContent_id()
                     + " is already used for another content");
         }
 
-        post.setContent(contentRepository.findById(
-                        post.getContent().getContent_id()).orElseThrow(
-                        () -> new IllegalStateException("There is not content with this id")
-                )
-        );
-        post.getContent().setType("post");
         postRepository.save(post);
+
+        Content content = contentRepository.findById(post.getPostID().getContent().getContent_id())
+                .orElseThrow(() -> new IllegalStateException("Content is not found"));
+
+        content.setType("post");
+        contentRepository.save(content);
     }
 
-    public String deletePost(Long post_id){
+    public String deletePost(PostID post_id){
         boolean chk = postRepository.existsById(post_id);
         if (chk){
             postRepository.deleteById(post_id);
@@ -54,7 +55,7 @@ public class PostService {
     }
 
     @Transactional
-    public String updatePost(Long post_id, String post_content){
+    public String updatePost(PostID post_id, String post_content){
         Post post = postRepository.findById(post_id).orElseThrow(
                 () -> new IllegalStateException("There is no Post with ID = " + post_id)
         );

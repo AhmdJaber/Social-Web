@@ -1,5 +1,6 @@
 package com.example.Social.Web.comment;
 
+import com.example.Social.Web.content.Content;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +18,7 @@ public class CommentController {
     }
 
     @GetMapping("getComment/{CommentID}")
-    public Comment getComment(@PathVariable("CommentID") Long id){
+    public Comment getComment(@PathVariable("CommentID") CommentID id){
         return commentService.getSomeComment(id);
     }
 
@@ -28,14 +29,14 @@ public class CommentController {
     }
 
     @DeleteMapping("Delete/{CommentID}")
-    public String deleteComment(@PathVariable("CommentID") Long id){
+    public String deleteComment(@PathVariable("CommentID") CommentID id){
         return commentService.deleteComment(id);
     }
 
     @PutMapping("Update/{CommentID}")
     public String updateComment(
-            @PathVariable("CommentID") Long comment_id,
+            @PathVariable("CommentID") CommentID commentId,
             @RequestParam(required = true) String comment_content){
-        return commentService.updateComment(comment_id, comment_content);
+        return commentService.updateComment(commentId, comment_content);
     }
 }

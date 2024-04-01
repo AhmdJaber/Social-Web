@@ -17,7 +17,7 @@ public class PostController {
     }
 
     @GetMapping("getPost/{PostID}")
-    public Post getPost(@PathVariable("PostID") Long id){
+    public Post getPost(@PathVariable("PostID") PostID id){
         return postService.getSomePost(id);
     }
 
@@ -28,13 +28,13 @@ public class PostController {
     }
 
     @DeleteMapping("Delete/{PostID}")
-    public String deletePost(@PathVariable("PostID") Long id){
-        return postService.deletePost(id);
+    public String deletePost(@PathVariable("PostID") PostID post_id){
+        return postService.deletePost(post_id);
     }
 
     @PutMapping("Update/{PostID}")
     public String updatePost(
-            @PathVariable("PostID") Long post_id,
+            @PathVariable("PostID") PostID post_id,
             @RequestParam(required = false) String post_content){
         return postService.updatePost(post_id, post_content);
     }

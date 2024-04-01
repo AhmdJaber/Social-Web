@@ -1,53 +1,49 @@
 package com.example.Social.Web.post;
 
-import com.example.Social.Web.content.Content;
+import com.example.Social.Web.comment.Comment;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table
 public class Post {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long post_id;
+    @EmbeddedId
+    @JoinColumn(name = "post_id")
+    private PostID postID;
 
-    @OneToOne
-    @JoinColumn(name = "content_id")
-    private Content content;
     private String post_content;
-    private LocalDate date;
+    private LocalDate date = LocalDate.now();
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "post")
+    private List<Comment> comments;
 
     public Post() {
     }
 
-    public Post(Long post_id, Content content, String post_content, LocalDate date) {
-        this.post_id = post_id;
-        this.content = content;
+    public Post(PostID postID, String post_content, LocalDate date, List<Comment> comments) {
+        this.postID = postID;
         this.post_content = post_content;
         this.date = date;
+        this.comments = comments;
     }
 
-    public Post(Content content, String post_content, LocalDate date) {
-        this.content = content;
+    public Post(String post_content, LocalDate date, List<Comment> comments) {
         this.post_content = post_content;
         this.date = date;
+        this.comments = comments;
     }
 
-    public Long getPost_id() {
-        return post_id;
+    public PostID getPostID() {
+        return postID;
     }
 
-    public void setPost_id(Long post_id) {
-        this.post_id = post_id;
-    }
-
-    public Content getContent() {
-        return content;
-    }
-
-    public void setContent(Content content) {
-        this.content = content;
+    public void setPostID(PostID postID) {
+        this.postID = postID;
     }
 
     public String getPost_content() {
@@ -66,13 +62,21 @@ public class Post {
         this.date = date;
     }
 
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
     @Override
     public String toString() {
         return "Post{" +
-                "post_id=" + post_id +
-                ", content=" + content +
+                "postID=" + postID +
                 ", post_content='" + post_content + '\'' +
                 ", date=" + date +
+                ", comments=" + comments +
                 '}';
     }
 }

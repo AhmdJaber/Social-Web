@@ -11,13 +11,13 @@ public class ReplyController {
     @Autowired
     private ReplyService replyService;
 
-    @GetMapping("/allReply")
+    @GetMapping("/allReplies")
     public List<Reply> getReplies(){
         return replyService.getAllReplies();
     }
 
     @GetMapping("getReply/{ReplyID}")
-    public Reply getReply(@PathVariable("ReplyID") Long id){
+    public Reply getReply(@PathVariable("ReplyID") ReplyID id){
         return replyService.getSomeReply(id);
     }
 
@@ -28,13 +28,13 @@ public class ReplyController {
     }
 
     @DeleteMapping("Delete/{ReplyID}")
-    public String deleteReply(@PathVariable("ReplyID") Long id){
+    public String deleteReply(@PathVariable("ReplyID") ReplyID id){
         return replyService.deleteReply(id);
     }
 
     @PutMapping("Update/{ReplyID}")
     public String updateReply(
-            @PathVariable("ReplyID") Long reply_id,
+            @PathVariable("ReplyID") ReplyID reply_id,
             @RequestParam(required = false) String reply_content){
         return replyService.updateReply(reply_id, reply_content);
     }

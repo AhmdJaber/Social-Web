@@ -1,6 +1,8 @@
 package com.example.Social.Web.comment;
 
+import com.example.Social.Web.content.Content;
 import com.example.Social.Web.content.ContentRepository;
+import com.example.Social.Web.reply.ReplyRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,45 +23,45 @@ public class CommentService {
         return commentRepository.findAll();
     }
 
-    public Comment getSomeComment(Long comment_id){
-        return commentRepository.findById(comment_id).orElseThrow(
-                () -> new IllegalStateException("There is no Comment with ID = " + comment_id)
+    public Comment getSomeComment(CommentID commentId){
+        return commentRepository.findById(commentId).orElseThrow(
+                () -> new IllegalStateException("There is no Comment with ID = " + commentId)
         );
     }
 
     public void AddComment(Comment comment){
-        if (comment.getContent().getType() != null){
+        if (commentRepository.existsByCommentID_Content(comment.getCommentID().getContent())){
             throw new IllegalStateException("This content id: " +
-                    comment.getContent().getContent_id()
+                    comment.getCommentID().getContent().getContent_id()
                     + " is already used for another content");
         }
 
-        comment.setContent(contentRepository.findById(
-                comment.getContent().getContent_id()).orElseThrow(
-                        () -> new IllegalStateException("There is not content with this id")
-                )
-        );
-        comment.getContent().setType("comment");
         commentRepository.save(comment);
+
+        Content content = contentRepository.findById(comment.getCommentID().getContent().getContent_id())
+                .orElseThrow(() -> new IllegalStateException("Content not found"));
+
+        content.setType("comment");
+        contentRepository.save(content);
     }
 
-    public String deleteComment(Long comment_id){
-        boolean chk = commentRepository.existsById(comment_id);
+    public String deleteComment(CommentID commentId){
+        boolean chk = commentRepository.existsById(commentId);
         if (chk){
-            commentRepository.deleteById(comment_id);
-            return "The Comment with ID = " + comment_id + " has been deleted!";
+            commentRepository.deleteById(commentId);
+            return "The Comment with ID = " + commentId + " has been deleted!";
         }
 
-        return "There is not comment with id = " + comment_id;
+        return "There is not comment with id = " + commentId;
     }
 
     @Transactional
-    public String updateComment(Long comment_id, String comment_content){
-        Comment comment = commentRepository.findById(comment_id).orElseThrow(
-                () -> new IllegalStateException("There is no Comment with ID = " + comment_id)
+    public String updateComment(CommentID commentId, String comment_content){
+        Comment comment = commentRepository.findById(commentId).orElseThrow(
+                () -> new IllegalStateException("There is no Comment with ID = " + commentId)
         );
 
-        comment.setComment_content(comment_content);
+        comment.setCommentContent(comment_content);
         return "Action is done";
     }
 

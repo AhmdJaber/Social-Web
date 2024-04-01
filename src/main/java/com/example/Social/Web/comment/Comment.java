@@ -1,56 +1,61 @@
 package com.example.Social.Web.comment;
 
-import com.example.Social.Web.content.Content;
+import com.example.Social.Web.post.Post;
+import com.example.Social.Web.reply.Reply;
+import com.example.Social.Web.reply.ReplyService;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table
 public class Comment {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long comment_id;
+    @EmbeddedId
+    @JoinColumn(name = "comment_id")
+    private CommentID commentID;
 
+    private String commentContent;
+    private LocalDate date = LocalDate.now();
 
-    @OneToOne
-    @JoinColumn(name = "content_id")
-    private Content content;
-
-    private String comment_content;
-    private LocalDate date;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "post_id")
+    private Post post;
 
     public Comment() {
     }
 
-    public Comment(Content content, String comment_content, LocalDate date) {
-        this.content = content;
-        this.comment_content = comment_content;
+    public Comment(CommentID commentID, String commentContent, LocalDate date, Post post, List<Reply> replies) {
+        this.commentID = commentID;
+        this.commentContent = commentContent;
         this.date = date;
+        this.post = post;
     }
 
-    public Long getComment_id() {
-        return comment_id;
+    public Comment(String commentContent, LocalDate date, Post post, List<Reply> replies) {
+        this.commentContent = commentContent;
+        this.date = date;
+        this.post = post;
     }
 
-    public void setComment_id(Long comment_id) {
-        this.comment_id = comment_id;
+    public CommentID getCommentID() {
+        return commentID;
     }
 
-    public Content getContent() {
-        return content;
+    public void setCommentID(CommentID commentID) {
+        this.commentID = commentID;
     }
 
-    public void setContent(Content content) {
-        this.content = content;
+    public String getCommentContent() {
+        return commentContent;
     }
 
-    public String getComment_content() {
-        return comment_content;
-    }
-
-    public void setComment_content(String comment_content) {
-        this.comment_content = comment_content;
+    public void setCommentContent(String commentContent) {
+        this.commentContent = commentContent;
     }
 
     public LocalDate getDate() {
@@ -61,13 +66,21 @@ public class Comment {
         this.date = date;
     }
 
+    public Post getPost() {
+        return post;
+    }
+
+    public void setPost(Post post) {
+        this.post = post;
+    }
+
     @Override
     public String toString() {
         return "Comment{" +
-                "comment_id=" + comment_id +
-                ", content=" + content +
-                ", comment_content='" + comment_content + '\'' +
+                "commentID=" + commentID +
+                ", commentContent='" + commentContent + '\'' +
                 ", date=" + date +
+                ", post=" + post +
                 '}';
     }
 }
