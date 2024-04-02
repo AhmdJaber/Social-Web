@@ -1,19 +1,15 @@
 package com.example.Social.Web.user;
 
-import com.example.Social.Web.content.Content;
-import com.example.Social.Web.relationship.Relationship;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Entity
 @Table(name = "userDB")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long user_id;
+    private Long userId;
     private String username;
     private String password;
     private LocalDate dob;
@@ -24,7 +20,7 @@ public class User {
     }
 
     public User(Long user_id, String username, String password, LocalDate dob, String phone, String email) {
-        this.user_id = user_id;
+        this.userId = user_id;
         this.username = username;
         this.password = password;
         this.dob = dob;
@@ -40,12 +36,12 @@ public class User {
         this.email = email;
     }
 
-    public Long getUser_id() {
-        return user_id;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUser_id(Long user_id) {
-        this.user_id = user_id;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getUsername() {
@@ -91,7 +87,7 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "user_id=" + user_id +
+                "user_id=" + userId +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", dob=" + dob +

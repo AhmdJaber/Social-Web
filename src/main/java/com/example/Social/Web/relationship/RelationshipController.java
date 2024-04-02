@@ -1,5 +1,6 @@
 package com.example.Social.Web.relationship;
 
+import com.example.Social.Web.user.User;
 import jakarta.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,14 +18,17 @@ public class RelationshipController {
         return relationshipService.getAllRelationship();
     }
 
-    @GetMapping("getRelationship/{RelationshipID}")
-    public Relationship getRelationship(@PathParam("RelationshipID") Long relation_id){
-        return relationshipService.getSomeRelationship(relation_id);
+    @GetMapping("getRelationship/{User1ID}/{User2ID}")
+    public Relationship getRelationship(@PathVariable("User1ID") Long user1ID,
+                                        @PathVariable("User2ID") Long user2ID){
+        return relationshipService.getSomeRelationship(user1ID, user2ID);
     }
 
     @PostMapping("addRelationship")
-    public Relationship addRelationship(@RequestBody Relationship relation){
-        return relationshipService.addRelationship(relation);
+    public Relationship addRelationship(@RequestParam Long user1ID,
+                                        @RequestParam Long user2ID,
+                                        @RequestParam String relationship){
+        return relationshipService.addRelationship(user1ID, user2ID, relationship);
     }
 
     @DeleteMapping("Delete/{RelationshipID}")

@@ -2,18 +2,23 @@ package com.example.Social.Web.post;
 
 import com.example.Social.Web.content.Content;
 import com.example.Social.Web.content.ContentRepository;
+import com.example.Social.Web.reaction.ReactionID;
+import com.example.Social.Web.relationship.*;
 import com.example.Social.Web.user.User;
 import com.example.Social.Web.user.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class PostService {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private RelationshipService relationshipService;
 
     @Autowired
     private ContentRepository contentRepository;
@@ -67,4 +72,23 @@ public class PostService {
     }
 
 
+    public List<Post> getUserPosts(Long userID) {
+        return postRepository.findByPostID_Content_User_UserId(userID);
+    }
+
+    public List<Post> getAccessiblePosts(Long userID) {
+        List<Post> allPosts = allPosts();
+        List<Post> visiblePosts = new ArrayList<>();
+        for(Post post: allPosts){
+            User curUser = post.getPostID().getContent().getUser();
+            Relationship relationship = relationshipService.getSomeRelationship(userID, curUser.getUserId());
+
+            if ((relationship == null) ||
+                    (relationship.getRelationType() != RelationType.BLOCK)){
+
+                visiblePosts.add(post);
+            }
+        }
+        return visiblePosts;
+    }
 }

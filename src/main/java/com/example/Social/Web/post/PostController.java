@@ -1,5 +1,6 @@
 package com.example.Social.Web.post;
 
+import com.example.Social.Web.comment.Comment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +22,15 @@ public class PostController {
         return postService.getSomePost(id);
     }
 
+    @GetMapping("getUserPosts/{UserID}")
+    public List<Post> userPosts(@PathVariable("UserID") Long userID){
+        return postService.getUserPosts(userID);
+    }
+
+    @GetMapping("visiblePosts/{UserID}")
+    public List<Post> accessiblePosts(@PathVariable("UserID") Long userID){
+        return postService.getAccessiblePosts(userID);
+    }
     @PostMapping("/addPost/{UserID}")
     public Post addPost(@PathVariable("UserID") Long userID,
             @RequestBody Post post){
