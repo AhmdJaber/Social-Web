@@ -39,9 +39,9 @@ public class ReactionService {
         return reactionRepository.findAll();
     }
 
-    public Reaction getSomeReaction(ReactionID reaction_id){
-        return reactionRepository.findById(reaction_id).orElseThrow(
-                () -> new IllegalStateException("There is no Reaction with ID = " + reaction_id)
+    public Reaction getSomeReaction(Long id){
+        return reactionRepository.findById(id).orElseThrow(
+                () -> new IllegalStateException("There is no Reaction with ID = " + id)
         );
     }
 
@@ -51,6 +51,11 @@ public class ReactionService {
         );
 
         ReactionID reactionID = new ReactionID(user, reaction.getReactionID().getContent());
+        Reaction curReaction = reactionRepository.findByReactionID(reactionID);
+        if (curReaction != null){
+            curReaction.setReactionType(ReactionType.valueOf(type.toUpperCase()));
+            return reactionRepository.save(curReaction);
+        }
         reaction.setReactionID(reactionID);
         reaction.setReactionType(ReactionType.valueOf(type.toUpperCase()));
 
@@ -81,20 +86,20 @@ public class ReactionService {
         return reactionRepository.save(reaction);
     }
 
-    public String deleteReaction(ReactionID reaction_id){
-        boolean chk = reactionRepository.existsById(reaction_id);
+    public String deleteReaction(Long id){
+        boolean chk = reactionRepository.existsById(id);
         if (chk){
-            reactionRepository.deleteById(reaction_id);
-            return "The Reaction with ID = " + reaction_id + " has been deleted!";
+            reactionRepository.deleteById(id);
+            return "The Reaction with ID = " + id + " has been deleted!";
         }
 
-        return "Action is Done";
+        return "There is no Reaction with this Id";
     }
 
     @Transactional
-    public String updateReaction(ReactionID reactionID, ReactionType reaction_type){
-        Reaction reaction = reactionRepository.findById(reactionID).orElseThrow(
-                () -> new IllegalStateException("There is no Reaction with ID = " + reactionID)
+    public String updateReaction(Long id, ReactionType reaction_type){
+        Reaction reaction = reactionRepository.findById(id).orElseThrow(
+                () -> new IllegalStateException("There is no Reaction with ID = " + id)
         );
 
         reaction.setReactionType(reaction_type);

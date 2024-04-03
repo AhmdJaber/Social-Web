@@ -26,6 +26,7 @@ public class Post {
     private List<Comment> comments;
 
     @OneToMany
+    @JoinColumn(name = "postReactions")
     private List<Reaction> reactions = new ArrayList<>();
 
     public Post() {

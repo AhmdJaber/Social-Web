@@ -19,6 +19,7 @@ public class Reply {
     private Content replyParent;
 
     @OneToMany
+    @JoinColumn(name = "replyReactions")
     private List<Reaction> reactions = new ArrayList<>();
 
     private String reply_content;

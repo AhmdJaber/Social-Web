@@ -34,7 +34,7 @@ public class Comment {
     private List<Reply> replies;
 
     @OneToMany
-    @JoinColumn(name = "reaction_id")
+    @JoinColumn(name = "commentReactions")
     private List<Reaction> reactions = new ArrayList<>();
 
     public Comment() {

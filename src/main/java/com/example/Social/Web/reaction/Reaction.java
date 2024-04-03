@@ -1,14 +1,15 @@
 package com.example.Social.Web.reaction;
 
-import jakarta.persistence.EmbeddedId;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table
 public class Reaction {
-    @EmbeddedId
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long Id;
+
+    @Embedded
     @JoinColumn(name = "reaction_id")
     private ReactionID reactionID;
 
@@ -17,9 +18,23 @@ public class Reaction {
     public Reaction() {
     }
 
-    public Reaction(ReactionID reactionID, ReactionType reaction_type) {
+    public Reaction(Long id, ReactionID reactionID, ReactionType reactionType) {
+        Id = id;
         this.reactionID = reactionID;
-        this.reactionType = reaction_type;
+        this.reactionType = reactionType;
+    }
+
+    public Reaction(ReactionID reactionID, ReactionType reactionType) {
+        this.reactionID = reactionID;
+        this.reactionType = reactionType;
+    }
+
+    public Long getId() {
+        return Id;
+    }
+
+    public void setId(Long id) {
+        Id = id;
     }
 
     public ReactionID getReactionID() {
@@ -41,8 +56,9 @@ public class Reaction {
     @Override
     public String toString() {
         return "Reaction{" +
-                "reactionID=" + reactionID +
-                ", reaction_type='" + reactionType + '\'' +
+                "Id=" + Id +
+                ", reactionID=" + reactionID +
+                ", reactionType=" + reactionType +
                 '}';
     }
 }
