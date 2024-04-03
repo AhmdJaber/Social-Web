@@ -22,9 +22,11 @@ public class ReactionController {
         return reactionService.getSomeReaction(reaction_id);
     }
 
-    @PostMapping("addReaction")
-    public Reaction addReaction(@RequestBody Reaction reaction){
-        return reactionService.addReaction(reaction);
+    @PostMapping("addReaction/{UserID}/{reactionType}")
+    public Reaction addReaction(@PathVariable("UserID") Long userId,
+                                @PathVariable("reactionType") String type,
+                                @RequestBody Reaction reaction){
+        return reactionService.addReaction(userId, reaction, type);
     }
 
     @DeleteMapping("Delete/{ReactionID}")

@@ -33,7 +33,7 @@ public class PostController {
     }
     @PostMapping("/addPost/{UserID}")
     public Post addPost(@PathVariable("UserID") Long userID,
-            @RequestBody Post post){
+                        @RequestBody Post post){
         return postService.AddPost(post, userID);
     }
 

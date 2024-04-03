@@ -12,7 +12,7 @@ import java.util.List;
 public class Content {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long content_id;
+    private Long contentId;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -27,8 +27,8 @@ public class Content {
     public Content() {
     }
 
-    public Content(Long content_id, User user, List<Reply> replies, String type) {
-        this.content_id = content_id;
+    public Content(Long contentId, User user, List<Reply> replies, String type) {
+        this.contentId = contentId;
         this.user = user;
         this.replies = replies;
         this.type = type;
@@ -45,12 +45,12 @@ public class Content {
         this.type = type;
     }
 
-    public Long getContent_id() {
-        return content_id;
+    public Long getContentId() {
+        return contentId;
     }
 
-    public void setContent_id(Long content_id) {
-        this.content_id = content_id;
+    public void setContentId(Long contentId) {
+        this.contentId = contentId;
     }
 
     public User getUser() {
@@ -80,7 +80,7 @@ public class Content {
     @Override
     public String toString() {
         return "Content{" +
-                "content_id=" + content_id +
+                "content Id=" + contentId +
                 ", user=" + user +
                 ", replies=" + replies +
                 ", type='" + type + '\'' +

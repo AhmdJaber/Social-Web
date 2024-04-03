@@ -12,14 +12,14 @@ public class Reaction {
     @JoinColumn(name = "reaction_id")
     private ReactionID reactionID;
 
-    private String reaction_type;
+    private ReactionType reactionType;
 
     public Reaction() {
     }
 
-    public Reaction(ReactionID reactionID, String reaction_type) {
+    public Reaction(ReactionID reactionID, ReactionType reaction_type) {
         this.reactionID = reactionID;
-        this.reaction_type = reaction_type;
+        this.reactionType = reaction_type;
     }
 
     public ReactionID getReactionID() {
@@ -30,19 +30,19 @@ public class Reaction {
         this.reactionID = reactionID;
     }
 
-    public String getReaction_type() {
-        return reaction_type;
+    public ReactionType getReactionType() {
+        return reactionType;
     }
 
-    public void setReaction_type(String reaction_type) {
-        this.reaction_type = reaction_type;
+    public void setReactionType(ReactionType reactionType) {
+        this.reactionType = reactionType;
     }
 
     @Override
     public String toString() {
         return "Reaction{" +
                 "reactionID=" + reactionID +
-                ", reaction_type='" + reaction_type + '\'' +
+                ", reaction_type='" + reactionType + '\'' +
                 '}';
     }
 }

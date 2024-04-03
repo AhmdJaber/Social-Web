@@ -2,6 +2,7 @@ package com.example.Social.Web.comment;
 
 import com.example.Social.Web.content.Content;
 import com.example.Social.Web.post.Post;
+import com.example.Social.Web.reaction.Reaction;
 import com.example.Social.Web.reply.Reply;
 import com.example.Social.Web.reply.ReplyService;
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -10,6 +11,7 @@ import jakarta.persistence.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -31,22 +33,28 @@ public class Comment {
     @JoinColumn(name = "content_id")
     private List<Reply> replies;
 
+    @OneToMany
+    @JoinColumn(name = "reaction_id")
+    private List<Reaction> reactions = new ArrayList<>();
+
     public Comment() {
     }
 
-    public Comment(CommentID commentID, String commentContent, LocalDate date, Post post, List<Reply> replies) {
+    public Comment(CommentID commentID, String commentContent, LocalDate date, Post post, List<Reply> replies, List<Reaction> reactions) {
         this.commentID = commentID;
         this.commentContent = commentContent;
         this.date = date;
         this.post = post;
         this.replies = replies;
+        this.reactions = reactions;
     }
 
-    public Comment(String commentContent, LocalDate date, Post post, List<Reply> replies) {
+    public Comment(String commentContent, LocalDate date, Post post, List<Reply> replies, List<Reaction> reactions) {
         this.commentContent = commentContent;
         this.date = date;
         this.post = post;
         this.replies = replies;
+        this.reactions = reactions;
     }
 
     public CommentID getCommentID() {
@@ -89,6 +97,14 @@ public class Comment {
         this.replies = replies;
     }
 
+    public List<Reaction> getReactions() {
+        return reactions;
+    }
+
+    public void setReactions(List<Reaction> reactions) {
+        this.reactions = reactions;
+    }
+
     @Override
     public String toString() {
         return "Comment{" +
@@ -97,6 +113,7 @@ public class Comment {
                 ", date=" + date +
                 ", post=" + post +
                 ", replies=" + replies +
+                ", reactions=" + reactions +
                 '}';
     }
 }

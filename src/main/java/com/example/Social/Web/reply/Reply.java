@@ -1,7 +1,11 @@
 package com.example.Social.Web.reply;
 
 import com.example.Social.Web.content.Content;
+import com.example.Social.Web.reaction.Reaction;
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table
@@ -14,19 +18,24 @@ public class Reply {
     @JoinColumn(name = "reply_parent_id")
     private Content replyParent;
 
+    @OneToMany
+    private List<Reaction> reactions = new ArrayList<>();
+
     private String reply_content;
 
     public Reply() {
     }
 
-    public Reply(ReplyID replyID, Content reply_parent, String reply_content) {
+    public Reply(ReplyID replyID, Content replyParent, List<Reaction> reactions, String reply_content) {
         this.replyID = replyID;
-        this.replyParent = reply_parent;
+        this.replyParent = replyParent;
+        this.reactions = reactions;
         this.reply_content = reply_content;
     }
 
-    public Reply(Content reply_parent, String reply_content) {
-        this.replyParent = reply_parent;
+    public Reply(Content replyParent, List<Reaction> reactions, String reply_content) {
+        this.replyParent = replyParent;
+        this.reactions = reactions;
         this.reply_content = reply_content;
     }
 
@@ -46,6 +55,14 @@ public class Reply {
         this.replyParent = replyParent;
     }
 
+    public List<Reaction> getReactions() {
+        return reactions;
+    }
+
+    public void setReactions(List<Reaction> reactions) {
+        this.reactions = reactions;
+    }
+
     public String getReply_content() {
         return reply_content;
     }
@@ -58,7 +75,8 @@ public class Reply {
     public String toString() {
         return "Reply{" +
                 "replyID=" + replyID +
-                ", reply_parent=" + replyParent +
+                ", replyParent=" + replyParent +
+                ", reactions=" + reactions +
                 ", reply_content='" + reply_content + '\'' +
                 '}';
     }
