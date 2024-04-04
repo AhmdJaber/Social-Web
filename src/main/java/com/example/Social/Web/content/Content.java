@@ -4,11 +4,13 @@ import com.example.Social.Web.reply.Reply;
 import com.example.Social.Web.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.List;
 
 @Entity
 @Table(name = "content")
+@Data
 public class Content {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,47 +45,5 @@ public class Content {
     public Content(User user, String type){
         this.user = user;
         this.type = type;
-    }
-
-    public Long getContentId() {
-        return contentId;
-    }
-
-    public void setContentId(Long contentId) {
-        this.contentId = contentId;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public List<Reply> getReplies() {
-        return replies;
-    }
-
-    public void setReplies(List<Reply> replies) {
-        this.replies = replies;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    @Override
-    public String toString() {
-        return "Content{" +
-                "content Id=" + contentId +
-                ", user=" + user +
-                ", replies=" + replies +
-                ", type='" + type + '\'' +
-                '}';
     }
 }

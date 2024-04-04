@@ -8,6 +8,7 @@ import com.example.Social.Web.reply.ReplyService;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
@@ -16,6 +17,7 @@ import java.util.List;
 
 @Entity
 @Table
+@Data
 public class Comment {
     @EmbeddedId
     @JoinColumn(name = "comment_id")
@@ -55,65 +57,5 @@ public class Comment {
         this.post = post;
         this.replies = replies;
         this.reactions = reactions;
-    }
-
-    public CommentID getCommentID() {
-        return commentID;
-    }
-
-    public void setCommentID(CommentID commentID) {
-        this.commentID = commentID;
-    }
-
-    public String getCommentContent() {
-        return commentContent;
-    }
-
-    public void setCommentContent(String commentContent) {
-        this.commentContent = commentContent;
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
-    public Post getPost() {
-        return post;
-    }
-
-    public void setPost(Post post) {
-        this.post = post;
-    }
-
-    public List<Reply> getReplies() {
-        return replies;
-    }
-
-    public void setReplies(List<Reply> replies) {
-        this.replies = replies;
-    }
-
-    public List<Reaction> getReactions() {
-        return reactions;
-    }
-
-    public void setReactions(List<Reaction> reactions) {
-        this.reactions = reactions;
-    }
-
-    @Override
-    public String toString() {
-        return "Comment{" +
-                "commentID=" + commentID +
-                ", commentContent='" + commentContent + '\'' +
-                ", date=" + date +
-                ", post=" + post +
-                ", replies=" + replies +
-                ", reactions=" + reactions +
-                '}';
     }
 }

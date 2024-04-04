@@ -1,10 +1,10 @@
 package com.example.Social.Web.post;
 
-import com.example.Social.Web.comment.Comment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 
 @RestController
 @RequestMapping("Post")

@@ -4,10 +4,12 @@ import com.example.Social.Web.content.Content;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
+import lombok.Data;
 
 import java.io.Serializable;
 
 @Embeddable
+@Data
 public class PostID implements Serializable {
     @OneToOne
     @JoinColumn(name = "post_id")
@@ -18,20 +20,5 @@ public class PostID implements Serializable {
 
     public PostID(Content content) {
         this.content = content;
-    }
-
-    public Content getContent() {
-        return content;
-    }
-
-    public void setContent(Content content) {
-        this.content = content;
-    }
-
-    @Override
-    public String toString() {
-        return "PostID{" +
-                "content=" + content +
-                '}';
     }
 }

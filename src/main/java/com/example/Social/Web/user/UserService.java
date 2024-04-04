@@ -47,47 +47,47 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    @Transactional
     public String updateName(Long user_id, String username){
         User user = userRepository.findById(user_id).orElseThrow(
                 () -> new IllegalStateException("There is no User with ID = " + user_id)
         );
 
         user.setUsername(username);
+        userRepository.save(user);
         return "Action is done";
     }
 
-    @Transactional
+
     public String updatePassword(Long user_id, String password){
         User user = userRepository.findById(user_id).orElseThrow(
                 () -> new IllegalStateException("There is no User with ID = " + user_id)
         );
 
         user.setPassword(password);
+        userRepository.save(user);
         return "Action is done";
     }
 
-    @Transactional
     public String updateDate(Long user_id, LocalDate dob){
         User user = userRepository.findById(user_id).orElseThrow(
                 () -> new IllegalStateException("There is no User with ID = " + user_id)
         );
 
         user.setDob(dob);
+        userRepository.save(user);
         return "Action is done";
     }
 
-    @Transactional
     public String updatePhone(Long user_id, String phone){
         User user = userRepository.findById(user_id).orElseThrow(
                 () -> new IllegalStateException("There is no User with ID = " + user_id)
         );
 
         user.setPhone(phone);
+        userRepository.save(user);
         return "Action is done";
     }
 
-    @Transactional
     public String updateEmail(Long user_id, String email){
         User user = userRepository.findById(user_id).orElseThrow(
                 () -> new IllegalStateException("There is no User with ID = " + user_id)
@@ -99,6 +99,7 @@ public class UserService {
         }
 
         user.setEmail(email);
+        userRepository.save(user);
         return "Action is done";
     }
 

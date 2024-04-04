@@ -5,10 +5,12 @@ import com.example.Social.Web.user.User;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.Data;
 
 import java.io.Serializable;
 
 @Embeddable
+@Data
 public class ReactionID implements Serializable {
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -24,29 +26,5 @@ public class ReactionID implements Serializable {
     public ReactionID(User user, Content content) {
         this.user = user;
         this.content = content;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Content getContent() {
-        return content;
-    }
-
-    public void setContent(Content content) {
-        this.content = content;
-    }
-
-    @Override
-    public String toString() {
-        return "ReactionID{" +
-                "user=" + user +
-                ", content=" + content +
-                '}';
     }
 }

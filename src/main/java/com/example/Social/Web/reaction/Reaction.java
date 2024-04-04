@@ -1,9 +1,11 @@
 package com.example.Social.Web.reaction;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 @Entity
 @Table
+@Data
 public class Reaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,38 +29,5 @@ public class Reaction {
     public Reaction(ReactionID reactionID, ReactionType reactionType) {
         this.reactionID = reactionID;
         this.reactionType = reactionType;
-    }
-
-    public Long getId() {
-        return Id;
-    }
-
-    public void setId(Long id) {
-        Id = id;
-    }
-
-    public ReactionID getReactionID() {
-        return reactionID;
-    }
-
-    public void setReactionID(ReactionID reactionID) {
-        this.reactionID = reactionID;
-    }
-
-    public ReactionType getReactionType() {
-        return reactionType;
-    }
-
-    public void setReactionType(ReactionType reactionType) {
-        this.reactionType = reactionType;
-    }
-
-    @Override
-    public String toString() {
-        return "Reaction{" +
-                "Id=" + Id +
-                ", reactionID=" + reactionID +
-                ", reactionType=" + reactionType +
-                '}';
     }
 }

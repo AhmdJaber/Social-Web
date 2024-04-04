@@ -4,10 +4,12 @@ import com.example.Social.Web.content.Content;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
+import lombok.Data;
 
 import java.io.Serializable;
 
 @Embeddable
+@Data
 public class CommentID implements Serializable {
     @OneToOne
     @JoinColumn(name = "content_id")
@@ -18,20 +20,5 @@ public class CommentID implements Serializable {
 
     public CommentID(Content content) {
         this.content = content;
-    }
-
-    public Content getContent() {
-        return content;
-    }
-
-    public void setContent(Content content) {
-        this.content = content;
-    }
-
-    @Override
-    public String toString() {
-        return "CommentID{" +
-                "content=" + content +
-                '}';
     }
 }
